@@ -7,7 +7,59 @@ class GpsAccessScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: Text('GpsAccessScreen'),
+        child: _AccessButton(),
+      ),
+    );
+  }
+}
+
+class _AccessButton extends StatelessWidget {
+  const _AccessButton({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text(
+          'Es necesario acceder a la ubicación',
+          style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.w300,
+          ),
+        ),
+        MaterialButton(
+          color: Colors.black,
+          elevation: 0,
+          shape: const StadiumBorder(),
+          splashColor: Colors.transparent,
+          onPressed: () {
+            //TODO: Implementar acceso a la ubicación
+          },
+          child: const Text(
+            'Solicitar acceso',
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _EnableGpsMessage extends StatelessWidget {
+  const _EnableGpsMessage({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Text(
+      'Debe de habilitar el GPS para continuar',
+      style: TextStyle(
+        fontSize: 25,
+        fontWeight: FontWeight.w300,
       ),
     );
   }
