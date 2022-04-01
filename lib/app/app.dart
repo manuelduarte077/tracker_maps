@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       title: 'Material App',
       debugShowCheckedModeBanner: false,
-      home: GpsAccessScreen(),
+      home: LoadingScreen(),
     );
   }
 }
