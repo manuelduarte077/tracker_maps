@@ -31,11 +31,13 @@ class _AccessButton extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text(
-          'Es necesario acceder a la ubicación',
-          style: TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.w300,
+        const Center(
+          child: Text(
+            'Es necesario acceder a la ubicación',
+            style: TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.w300,
+            ),
           ),
         ),
         MaterialButton(
@@ -63,11 +65,13 @@ class _EnableGpsMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text(
-      'Debe de habilitar el GPS para continuar',
-      style: TextStyle(
-        fontSize: 25,
-        fontWeight: FontWeight.w300,
+    return const Center(
+      child: Text(
+        'Debe de habilitar el GPS para continuar',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w300,
+        ),
       ),
     );
   }
