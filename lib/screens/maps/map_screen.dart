@@ -18,7 +18,6 @@ class _MapScreenState extends State<MapScreen> {
 
     locationBloc = BlocProvider.of<LocationBloc>(context);
 
-    // locationBloc.getCurrentLocation();
     locationBloc.startFollowingUser();
   }
 
@@ -31,9 +30,35 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Map Screen'),
+    return Scaffold(
+      body: BlocBuilder<LocationBloc, LocationState>(
+        builder: (context, state) {
+          if (state.lastKnownLocation == null) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  CircularProgressIndicator.adaptive(),
+                  Text('Getting your location...'),
+                ],
+              ),
+            );
+          }
+
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'Your location',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                Text('Lat: ${state.lastKnownLocation?.latitude}'),
+                Text('Lng: ${state.lastKnownLocation?.longitude}'),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
