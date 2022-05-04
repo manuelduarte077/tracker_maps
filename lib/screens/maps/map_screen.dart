@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:maps/blocs/blocs.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:maps/blocs/blocs.dart';
+import 'package:maps/views/views.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({Key? key}) : super(key: key);
@@ -44,17 +45,10 @@ class _MapScreenState extends State<MapScreen> {
               ),
             );
           }
-
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+          return SingleChildScrollView(
+            child: Stack(
               children: [
-                const Text(
-                  'Your location',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                Text('Lat: ${state.lastKnownLocation?.latitude}'),
-                Text('Lng: ${state.lastKnownLocation?.longitude}'),
+                MapView(initialLocation: state.lastKnownLocation!),
               ],
             ),
           );
