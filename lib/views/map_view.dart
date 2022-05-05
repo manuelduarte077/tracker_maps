@@ -25,18 +25,22 @@ class MapView extends StatelessWidget {
     return SizedBox(
       width: size.width,
       height: size.height,
-      child: GoogleMap(
-        initialCameraPosition: initialCameraPosition,
-        myLocationEnabled: true,
-        zoomControlsEnabled: false,
-        zoomGesturesEnabled: true,
-        myLocationButtonEnabled: false,
-        onMapCreated: (controller) =>
-            mapBloc.add(OnMapInitializedEvent(controller)),
+      child: Listener(
+        onPointerMove: (pointMoveEvent) {
+          mapBloc.add(OnStopMapFollowingUserEvent());
+        },
+        child: GoogleMap(
+          initialCameraPosition: initialCameraPosition,
+          compassEnabled: false,
+          myLocationEnabled: true,
+          zoomControlsEnabled: false,
+          myLocationButtonEnabled: false,
+          onMapCreated: (controller) =>
+              mapBloc.add(OnMapInitializedEvent(controller)),
 
-        // TODO: Marker
-        // TODO: Polyline
-        // TODO: cuando se mueve el mapa, se actualiza la posición del usuario
+          // TODO: Marker
+          // TODO: Polyline
+        ),
       ),
     );
   }
