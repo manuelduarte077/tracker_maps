@@ -26,8 +26,6 @@ class BtnFollowUser extends StatelessWidget {
               ),
               onPressed: () {
                 mapBloc.add(OnStartMapFollowingUserEvent());
-
-                print('Follow user');
               },
             );
           },
