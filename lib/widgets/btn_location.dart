@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:maps/blocs/blocs.dart';
+import 'package:maps/ui/ui.dart';
 
 class BtnCurrentLocation extends StatelessWidget {
   const BtnCurrentLocation({Key? key}) : super(key: key);
@@ -21,7 +22,12 @@ class BtnCurrentLocation extends StatelessWidget {
           onPressed: () {
             final userLocation = locationBloc.state.lastKnownLocation;
 
-            if (userLocation == null) return;
+            if (userLocation == null) {
+              final snack =
+                  CustomSnackbar(message: 'No hay ubicación', btnLabel: 'OK');
+              ScaffoldMessenger.of(context).showSnackBar(snack);
+              return;
+            }
 
             mapBloc.moveCamera(userLocation);
           },
