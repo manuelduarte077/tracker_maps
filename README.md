@@ -1,6 +1,4 @@
-# maps
-
-A new Flutter project.
+# Tracker Maps
 
 ## Getting Started
 

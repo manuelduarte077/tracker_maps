@@ -51,3 +51,6 @@ macos/
 linux/
 windows/
 web/
+
+# FVM
+.fvm/
