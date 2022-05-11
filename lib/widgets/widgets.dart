@@ -1,3 +1,5 @@
+export 'package:maps/widgets/market/manual_marker.dart';
+
 export 'package:maps/widgets/searchbar.dart';
 export 'package:maps/widgets/btn_location.dart';
 export 'package:maps/widgets/btn_follow_user.dart';

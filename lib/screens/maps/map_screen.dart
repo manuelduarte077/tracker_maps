@@ -70,6 +70,7 @@ class _MapScreenState extends State<MapScreen> {
                     ),
                     // TODO: Add a button to toggle the route drawing
                     const SearchBar(),
+                    const ManualMarker(),
                   ],
                 ),
               );
