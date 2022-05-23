@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:maps/blocs/blocs.dart';
 import 'package:maps/delegate/search.dart';
 import 'package:maps/models/search_result.dart';
@@ -13,7 +15,7 @@ class SearchBar extends StatelessWidget {
       builder: (context, state) {
         return state.displayManualMarker
             ? const SizedBox()
-            : const _SearchBar();
+            : ElasticInDown(child: const _SearchBar());
       },
     );
   }

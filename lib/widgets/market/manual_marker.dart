@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:maps/blocs/location/location_bloc.dart';
+import 'package:maps/blocs/map/map_bloc.dart';
 
 import 'package:maps/blocs/search/search_bloc.dart';
 
@@ -25,6 +27,9 @@ class _ManualMarker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final mapBloc = BlocProvider.of<MapBloc>(context);
+    final searchBloc = BlocProvider.of<SearchBloc>(context);
+    final locationBloc = BlocProvider.of<LocationBloc>(context);
 
     return SizedBox(
       width: size.width,
@@ -54,21 +59,34 @@ class _ManualMarker extends StatelessWidget {
 
           // Btn Confirm
           Positioned(
-            bottom: 30,
+            bottom: 60,
             left: 40,
-            child: MaterialButton(
-              minWidth: size.width - 120,
-              onPressed: () {},
-              child: const Text(
-                'Confirm',
-                style:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-              ),
-              color: Colors.black,
-              elevation: 0,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5),
+            child: FadeInUp(
+              duration: const Duration(milliseconds: 300),
+              child: MaterialButton(
+                minWidth: size.width - 120,
+                child: const Text(
+                  'Confirm',
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+                color: Colors.black,
+                elevation: 0,
+                height: 50,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                onPressed: () async {
+                  final start = locationBloc.state.lastKnownLocation;
+                  if (start == null) return;
+
+                  final end = mapBloc.mapCenter;
+                  if (end == null) return;
+
+                  await searchBloc.getCoorsStartToEnd(start, end);
+                },
               ),
             ),
           ),
