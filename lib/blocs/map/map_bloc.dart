@@ -87,7 +87,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   Future drawRoutePoliyline(RouteDestination destination) async {
     final myRoute = Polyline(
       polylineId: const PolylineId('route'),
-      color: Colors.blueAccent,
+      color: Colors.indigoAccent,
       width: 5,
       startCap: Cap.roundCap,
       endCap: Cap.roundCap,

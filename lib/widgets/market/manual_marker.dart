@@ -5,6 +5,7 @@ import 'package:maps/blocs/location/location_bloc.dart';
 import 'package:maps/blocs/map/map_bloc.dart';
 
 import 'package:maps/blocs/search/search_bloc.dart';
+import 'package:maps/helpers/show_loading_message.dart';
 
 class ManualMarker extends StatelessWidget {
   const ManualMarker({Key? key}) : super(key: key);
@@ -85,16 +86,16 @@ class _ManualMarker extends StatelessWidget {
                   final end = mapBloc.mapCenter;
                   if (end == null) return;
 
-                  // showLoadingMessage(context);
+                  showLoadingMessage(context);
 
                   final destination =
                       await searchBloc.getCoorsStartToEnd(start, end);
 
                   await mapBloc.drawRoutePoliyline(destination);
 
-                  // searchBloc.add(OnDeactivateManualMarkerEvent());
+                  searchBloc.add(SearchEventDisplaySearchBar());
 
-                  // Navigator.pop(context);
+                  Navigator.pop(context);
                 },
               ),
             ),
