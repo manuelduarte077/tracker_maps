@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import 'package:loading_progress_indicator/loading_progress_indicator.dart';
+import 'package:loading_progress_indicator/progress_indicator/ball_pulse_progress_indicator.dart';
+
 import 'package:maps/blocs/blocs.dart';
 import 'package:maps/views/views.dart';
 import 'package:maps/widgets/widgets.dart';
@@ -40,9 +43,14 @@ class _MapScreenState extends State<MapScreen> {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  CircularProgressIndicator.adaptive(),
-                  Text('Getting your location...'),
+                children: [
+                  LoadingProgressIndicator(
+                    color: Colors.deepPurpleAccent,
+                    size: 70,
+                    indicator: BallPulseProgressIndicator(),
+                  ),
+                  const SizedBox(height: 5),
+                  const Text('Getting your location...'),
                 ],
               ),
             );
@@ -53,7 +61,6 @@ class _MapScreenState extends State<MapScreen> {
               if (!mapState.isShowRouteDrawing) {
                 polylines.removeWhere((key, value) => key == 'myRoute');
               }
-
               return SingleChildScrollView(
                 child: Stack(
                   children: [
@@ -61,6 +68,9 @@ class _MapScreenState extends State<MapScreen> {
                       initialLocation: locationState.lastKnownLocation!,
                       polylines: polylines.values.toSet(),
                     ),
+                    // TODO: Add a button to toggle the route drawing
+                    const SearchBar(),
+                    const ManualMarker(),
                   ],
                 ),
               );
