@@ -59,7 +59,7 @@ class _ManualMarker extends StatelessWidget {
 
           // Btn Confirm
           Positioned(
-            bottom: 60,
+            bottom: 30,
             left: 40,
             child: FadeInUp(
               duration: const Duration(milliseconds: 300),
@@ -85,7 +85,16 @@ class _ManualMarker extends StatelessWidget {
                   final end = mapBloc.mapCenter;
                   if (end == null) return;
 
-                  await searchBloc.getCoorsStartToEnd(start, end);
+                  // showLoadingMessage(context);
+
+                  final destination =
+                      await searchBloc.getCoorsStartToEnd(start, end);
+
+                  await mapBloc.drawRoutePoliyline(destination);
+
+                  // searchBloc.add(OnDeactivateManualMarkerEvent());
+
+                  // Navigator.pop(context);
                 },
               ),
             ),
