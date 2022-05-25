@@ -37,7 +37,6 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
   void startFollowingUser() {
     add(OnStartFollowingUserEvent());
 
-    print('startFollowingUser');
     positionStream = Geolocator.getPositionStream().listen((event) {
       final position = event;
       add(
@@ -50,8 +49,6 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
     positionStream?.cancel();
 
     add(OnStopFollowingUserEvent());
-
-    print('Position stream cancelled');
   }
 
   @override
