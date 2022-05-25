@@ -16,7 +16,8 @@ void main() {
               MapBloc(locationBloc: BlocProvider.of<LocationBloc>(context)),
         ),
         BlocProvider<SearchBloc>(
-            create: (context) => SearchBloc(trafficService: TrafficService())),
+          create: (context) => SearchBloc(trafficService: TrafficService()),
+        ),
       ],
       child: const MyApp(),
     ),

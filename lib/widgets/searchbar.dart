@@ -15,7 +15,10 @@ class SearchBar extends StatelessWidget {
       builder: (context, state) {
         return state.displayManualMarker
             ? const SizedBox()
-            : ElasticInDown(child: const _SearchBar());
+            : ElasticInDown(
+                duration: const Duration(milliseconds: 300),
+                child: const _SearchBar(),
+              );
       },
     );
   }
@@ -24,13 +27,20 @@ class SearchBar extends StatelessWidget {
 class _SearchBar extends StatelessWidget {
   const _SearchBar({Key? key}) : super(key: key);
 
-  void onSearchResults(BuildContext context, SearchResult result) {
+  void onSearchResults(BuildContext context, SearchResult result) async {
     final searchBloc = BlocProvider.of<SearchBloc>(context);
+    final locationBloc = BlocProvider.of<LocationBloc>(context);
+    final mapBloc = BlocProvider.of<MapBloc>(context);
 
     if (result.manual == true) {
       searchBloc.add(SearchEventDisplayManualMarker());
-
       return;
+    }
+
+    if (result.position != null) {
+      final destination = await searchBloc.getCoorsStartToEnd(
+          locationBloc.state.lastKnownLocation!, result.position!);
+      await mapBloc.drawRoutePoliyline(destination);
     }
   }
 
