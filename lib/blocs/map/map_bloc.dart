@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-
+import 'package:equatable/equatable.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 import 'package:maps/blocs/blocs.dart';
 import 'package:maps/models/models.dart';
 import 'package:maps/themes/theme.dart';
