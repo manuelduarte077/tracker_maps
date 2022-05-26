@@ -12,18 +12,15 @@ class BtnToggleUserRoute extends StatelessWidget {
 
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
-      child: CircleAvatar(
-        radius: 25,
+      child: FloatingActionButton(
         backgroundColor: Colors.white,
-        child: IconButton(
-          icon: const Icon(
-            Icons.more_horiz_rounded,
-            color: Colors.black,
-          ),
-          onPressed: () {
-            mapBloc.add(OnToggleUserRouteDrawingEvent());
-          },
+        child: const Icon(
+          Icons.more_horiz_rounded,
+          color: Colors.black,
         ),
+        onPressed: () {
+          mapBloc.add(OnToggleUserRouteDrawingEvent());
+        },
       ),
     );
   }
