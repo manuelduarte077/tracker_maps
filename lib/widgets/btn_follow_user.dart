@@ -12,17 +12,23 @@ class BtnFollowUser extends StatelessWidget {
 
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
-      child: FloatingActionButton(
-        backgroundColor: Colors.white,
+      child: ElevatedButton(
         child: BlocBuilder<MapBloc, MapState>(
           builder: (context, state) {
             return Icon(
               state.isFollowingUser
                   ? Icons.directions_run_rounded
                   : Icons.hail_rounded,
-              color: Colors.black,
+              color: Colors.white,
             );
           },
+        ),
+        style: ElevatedButton.styleFrom(
+          primary: Colors.indigoAccent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          animationDuration: const Duration(milliseconds: 500),
         ),
         onPressed: () {
           mapBloc.add(OnStartMapFollowingUserEvent());
