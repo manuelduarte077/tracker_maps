@@ -12,8 +12,9 @@ void main() {
         BlocProvider<GpsBloc>(create: (context) => GpsBloc()),
         BlocProvider<LocationBloc>(create: (context) => LocationBloc()),
         BlocProvider<MapBloc>(
-          create: (context) =>
-              MapBloc(locationBloc: BlocProvider.of<LocationBloc>(context)),
+          create: (context) => MapBloc(
+            locationBloc: BlocProvider.of<LocationBloc>(context),
+          ),
         ),
         BlocProvider<SearchBloc>(
           create: (context) => SearchBloc(trafficService: TrafficService()),

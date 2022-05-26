@@ -29,10 +29,6 @@ void showLoadingMessage(BuildContext context) {
                 size: 50,
                 color: Colors.indigoAccent,
               ),
-              // CircularProgressIndicator(
-              //   strokeWidth: 3,
-              //   color: Colors.black,
-              // )
             ],
           ),
         ),

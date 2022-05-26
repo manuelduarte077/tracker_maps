@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:maps/blocs/blocs.dart';
-import 'package:maps/models/route_destination.dart';
+import 'package:maps/models/models.dart';
 import 'package:maps/themes/theme.dart';
 
 part 'map_event.dart';
@@ -32,7 +32,11 @@ class MapBloc extends Bloc<MapEvent, MapState> {
 
     on<UpddateUSerPolylineEvent>(_onPolylineNewPoint);
     on<DisplayPolylinesEvent>(
-      (event, emit) => emit(state.copyWith(polylines: event.polylines)),
+      (event, emit) => emit(state.copyWith(
+        polylines: event.polylines,
+        markers: event.markers,
+        circles: event.circles,
+      )),
     );
 
     on<OnToggleUserRouteDrawingEvent>(
@@ -71,7 +75,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
       UpddateUSerPolylineEvent event, Emitter<MapState> emit) {
     final myRoute = Polyline(
       polylineId: const PolylineId('myRoute'),
-      color: Colors.black,
+      color: Colors.indigoAccent,
       width: 5,
       startCap: Cap.roundCap,
       endCap: Cap.roundCap,
@@ -94,12 +98,68 @@ class MapBloc extends Bloc<MapEvent, MapState> {
       points: destination.points,
     );
 
+    // Markers
+    final startMarker = Marker(
+      markerId: const MarkerId('start'),
+      position: destination.points.first,
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
+      infoWindow: InfoWindow(
+        title: 'Start',
+        snippet: '${destination.points.first}',
+      ),
+    );
+
+    final endMarker = Marker(
+      markerId: const MarkerId('end'),
+      position: destination.points.last,
+      icon: BitmapDescriptor.defaultMarker,
+      infoWindow: InfoWindow(
+        title: 'Start',
+        snippet: '${destination.points.last}',
+      ),
+      draggable: true,
+      onTap: () {},
+    );
+
+    // Circles
+    // final startCircle = Circle(
+    //   circleId: const CircleId('start'),
+    //   center: destination.points.first,
+    //   radius: 10,
+    //   strokeColor: Colors.indigoAccent,
+    //   strokeWidth: 5,
+    //   fillColor: Colors.transparent,
+    // );
+
+    final endCircle = Circle(
+      circleId: const CircleId('end'),
+      center: destination.points.last,
+      radius: 10,
+      // strokeColor: Colors.purpleAccent,
+      // fillColor: Colors.transparent,
+      fillColor: const Color.fromRGBO(171, 39, 133, 0.1),
+      strokeColor: const Color.fromRGBO(171, 39, 133, 0.5),
+    );
+
+    final currentCircles = Map<String, Circle>.from(state.circles);
+    currentCircles['start'] = endCircle;
+
     final currentPolylines = Map<String, Polyline>.from(state.polylines);
     currentPolylines['route'] = myRoute;
 
-    add(DisplayPolylinesEvent(currentPolylines));
+    final currentMarkers = Map<String, Marker>.from(state.markers);
+    currentMarkers['start '] = startMarker;
 
-    // add(MapEventUpdatePolylines(polylines: currentPolylines));
+    currentMarkers['end'] = endMarker;
+
+    add(DisplayPolylinesEvent(
+      currentPolylines,
+      currentMarkers,
+      currentCircles,
+    ));
+
+    await Future.delayed(const Duration(milliseconds: 300));
+    _mapController?.showMarkerInfoWindow(const MarkerId('start'));
   }
 
   void moveCamera(LatLng newLocation) {
