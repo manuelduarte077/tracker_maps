@@ -12,11 +12,10 @@ class SearchDestinationDelegate extends SearchDelegate<SearchResult> {
   List<Widget>? buildActions(BuildContext context) {
     return [
       IconButton(
-        icon: const Icon(Icons.clear),
-        onPressed: () {
-          query = '';
-        },
-      )
+          icon: const Icon(Icons.clear),
+          onPressed: () {
+            query = '';
+          })
     ];
   }
 
