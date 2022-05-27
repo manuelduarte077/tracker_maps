@@ -36,10 +36,25 @@ class TrafficService {
 
     final resp = await _dioPlaces.get(url, queryParameters: {
       'proximity': '${proximity.longitude},${proximity.latitude}',
+      'limit': '7',
     });
 
     final placesResponse = PlacesResponse.fromJson(resp.data);
 
     return placesResponse.features;
+  }
+
+  // Traer la informacion de los places
+  Future<Feature> getInfoPlaces(LatLng coors) async {
+    final url =
+        '$_baseTrafficUrlPlaces/${coors.longitude}, ${coors.latitude}.json';
+
+    final resp = await _dioPlaces.get(url, queryParameters: {
+      'limit': '1',
+    });
+
+    final placesResponse = PlacesResponse.fromJson(resp.data);
+
+    return placesResponse.features.first;
   }
 }
