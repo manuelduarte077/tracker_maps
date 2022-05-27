@@ -6,11 +6,13 @@ class RouteDestination {
   final double duration;
   final double distance;
   final Feature endPlaces;
+  final Feature startPlaces;
 
   RouteDestination({
     required this.points,
     required this.duration,
     required this.distance,
     required this.endPlaces,
+    required this.startPlaces,
   });
 }

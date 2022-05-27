@@ -35,6 +35,9 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     // informacion de la ruta
     final endPlaces = await trafficService.getInfoPlaces(end);
 
+    // informacion de la ruta
+    final startPlaces = await trafficService.getInfoPlaces(start);
+
     final duration = trafficResponse.routes[0].duration;
     final distance = trafficResponse.routes[0].distance;
     final geometry = trafficResponse.routes[0].geometry;
@@ -51,6 +54,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       distance: distance,
       duration: duration,
       endPlaces: endPlaces,
+      startPlaces: startPlaces,
     );
   }
 

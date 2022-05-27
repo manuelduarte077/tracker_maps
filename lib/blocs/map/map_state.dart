@@ -7,8 +7,10 @@ class MapState extends Equatable {
 
   // Polyline
   final Map<String, Polyline> polylines;
+
   // Markers
   final Map<String, Marker> markers;
+
   // Circles
   final Map<String, Circle> circles;
 
@@ -30,6 +32,7 @@ class MapState extends Equatable {
     Map<String, Polyline>? polylines,
     Map<String, Marker>? markers,
     Map<String, Circle>? circles,
+    Map<String, Polygon>? polygons,
   }) =>
       MapState(
         isMapInitialized: isMapInitialized ?? this.isMapInitialized,
