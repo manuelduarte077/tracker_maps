@@ -17,14 +17,13 @@ class BtnCurrentLocation extends StatelessWidget {
       child: ElevatedButton(
         child: const Icon(
           Icons.my_location_rounded,
-          color: Colors.white,
+          color: Colors.black,
         ),
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
           animationDuration: const Duration(milliseconds: 500),
-          primary: Colors.indigoAccent,
         ),
         onPressed: () {
           final userLocation = locationBloc.state.lastKnownLocation;

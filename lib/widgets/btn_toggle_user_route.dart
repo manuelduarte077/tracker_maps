@@ -15,14 +15,13 @@ class BtnToggleUserRoute extends StatelessWidget {
       child: ElevatedButton(
         child: const Icon(
           Icons.more_horiz_rounded,
-          color: Colors.white,
+          color: Colors.black,
         ),
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
           animationDuration: const Duration(milliseconds: 500),
-          primary: Colors.indigoAccent,
         ),
         onPressed: () {
           mapBloc.add(OnToggleUserRouteDrawingEvent());

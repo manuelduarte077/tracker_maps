@@ -19,12 +19,11 @@ class BtnFollowUser extends StatelessWidget {
               state.isFollowingUser
                   ? Icons.directions_run_rounded
                   : Icons.hail_rounded,
-              color: Colors.white,
+              color: Colors.black,
             );
           },
         ),
         style: ElevatedButton.styleFrom(
-          primary: Colors.indigoAccent,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
