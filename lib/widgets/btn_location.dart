@@ -14,24 +14,28 @@ class BtnCurrentLocation extends StatelessWidget {
 
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
-      child: CircleAvatar(
-        radius: 25,
-        backgroundColor: Colors.white,
-        child: IconButton(
-          icon: const Icon(Icons.my_location_outlined, color: Colors.black),
-          onPressed: () {
-            final userLocation = locationBloc.state.lastKnownLocation;
-
-            if (userLocation == null) {
-              final snack =
-                  CustomSnackbar(message: 'No hay ubicación', btnLabel: 'OK');
-              ScaffoldMessenger.of(context).showSnackBar(snack);
-              return;
-            }
-
-            mapBloc.moveCamera(userLocation);
-          },
+      child: ElevatedButton(
+        child: const Icon(
+          Icons.my_location_rounded,
+          color: Colors.black,
         ),
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          animationDuration: const Duration(milliseconds: 500),
+        ),
+        onPressed: () {
+          final userLocation = locationBloc.state.lastKnownLocation;
+
+          if (userLocation == null) {
+            final snack =
+                CustomSnackbar(message: 'No hay ubicación', btnLabel: 'OK');
+            ScaffoldMessenger.of(context).showSnackBar(snack);
+            return;
+          }
+          mapBloc.moveCamera(userLocation);
+        },
       ),
     );
   }

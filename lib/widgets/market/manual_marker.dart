@@ -61,7 +61,7 @@ class _ManualMarker extends StatelessWidget {
           // Btn Confirm
           Positioned(
             bottom: 30,
-            left: 40,
+            left: 25,
             child: FadeInUp(
               duration: const Duration(milliseconds: 300),
               child: MaterialButton(

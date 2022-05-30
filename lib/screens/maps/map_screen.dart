@@ -67,8 +67,9 @@ class _MapScreenState extends State<MapScreen> {
                     MapView(
                       initialLocation: locationState.lastKnownLocation!,
                       polylines: polylines.values.toSet(),
+                      markers: mapState.markers.values.toSet(),
+                      circles: mapState.circles.values.toSet(),
                     ),
-                    // TODO: Add a button to toggle the route drawing
                     const SearchBar(),
                     const ManualMarker(),
                   ],
