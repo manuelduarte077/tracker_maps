@@ -7,8 +7,9 @@ import 'package:equatable/equatable.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:maps/blocs/blocs.dart';
-import 'package:maps/models/models.dart';
 import 'package:maps/themes/theme.dart';
+import 'package:maps/models/models.dart';
+import 'package:maps/helpers/widgets_to_marker.dart';
 
 part 'map_event.dart';
 part 'map_state.dart';
@@ -58,6 +59,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
 
   void _onInitMap(OnMapInitializedEvent event, Emitter<MapState> emit) {
     _mapController = event.controller;
+
     _mapController!.setMapStyle(jsonEncode(uberMapTheme));
 
     emit(state.copyWith(isMapInitialized: true));
@@ -92,54 +94,60 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     final myRoute = Polyline(
       polylineId: const PolylineId('route'),
       color: Colors.indigoAccent,
-      width: 5,
+      width: 10,
       startCap: Cap.roundCap,
       endCap: Cap.roundCap,
       points: destination.points,
     );
 
+    double kms = destination.distance / 1000;
+    kms = (kms * 100).floorToDouble();
+    kms /= 100;
+
+    // Tiempo de duración de la ruta en horas y minutos
+
+    // final tripDuration = Duration(
+    //   hours: destination.duration ~/ 3600,
+    //   minutes: (destination.duration % 3600) ~/ 60.floorToDouble(),
+    // );
+
+    int tripDuration = (destination.duration / 60).floorToDouble().toInt();
+    // final durationText = '${tripDuration.inHours}h ${tripDuration.inMinutes}';
+
+    final startMaker = await getStartCustomMarker(
+        tripDuration, destination.startPlaces.placeName);
+    final endMaker =
+        await getEndCustomMarker(kms.toInt(), destination.endPlaces.text);
+
     // Markers
     final startMarker = Marker(
+      anchor: const Offset(0.1, 1),
       markerId: const MarkerId('start'),
       position: destination.points.first,
-      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
-      infoWindow: InfoWindow(
-        title: 'Start',
-        snippet: '${destination.points.first}',
-      ),
+      icon: startMaker,
     );
 
     final endMarker = Marker(
       markerId: const MarkerId('end'),
       position: destination.points.last,
-      icon: BitmapDescriptor.defaultMarker,
-      infoWindow: InfoWindow(
-        title: 'Start',
-        snippet: '${destination.points.last}',
-      ),
+      icon: endMaker,
       draggable: true,
       onTap: () {},
     );
+    // End Markers
 
     // Circles
-    // final startCircle = Circle(
-    //   circleId: const CircleId('start'),
-    //   center: destination.points.first,
-    //   radius: 10,
-    //   strokeColor: Colors.indigoAccent,
-    //   strokeWidth: 5,
-    //   fillColor: Colors.transparent,
-    // );
-
     final endCircle = Circle(
       circleId: const CircleId('end'),
       center: destination.points.last,
       radius: 10,
-      // strokeColor: Colors.purpleAccent,
-      // fillColor: Colors.transparent,
       fillColor: const Color.fromRGBO(171, 39, 133, 0.1),
       strokeColor: const Color.fromRGBO(171, 39, 133, 0.5),
+      onTap: () {},
     );
+    // End Circles
+
+    // End Polygons
 
     final currentCircles = Map<String, Circle>.from(state.circles);
     currentCircles['start'] = endCircle;
