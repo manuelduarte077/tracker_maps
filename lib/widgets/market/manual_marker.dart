@@ -69,7 +69,9 @@ class _ManualMarker extends StatelessWidget {
                 child: const Text(
                   'Confirm',
                   style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 color: Colors.black,
                 elevation: 0,

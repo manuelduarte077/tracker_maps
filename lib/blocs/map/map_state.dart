@@ -4,6 +4,7 @@ class MapState extends Equatable {
   final bool isMapInitialized;
   final bool isFollowingUser;
   final bool isShowRouteDrawing;
+  final bool selectedCircleId;
 
   // Polyline
   final Map<String, Polyline> polylines;
@@ -18,6 +19,7 @@ class MapState extends Equatable {
     this.isMapInitialized = false,
     this.isFollowingUser = true,
     this.isShowRouteDrawing = true,
+    this.selectedCircleId = false,
     Map<String, Polyline>? polylines,
     Map<String, Marker>? markers,
     Map<String, Circle>? circles,
@@ -29,6 +31,7 @@ class MapState extends Equatable {
     bool? isMapInitialized,
     bool? isFollowingUser,
     bool? isShowRouteDrawing,
+    bool? selectedCircleId,
     Map<String, Polyline>? polylines,
     Map<String, Marker>? markers,
     Map<String, Circle>? circles,
@@ -38,6 +41,7 @@ class MapState extends Equatable {
         isMapInitialized: isMapInitialized ?? this.isMapInitialized,
         isFollowingUser: isFollowingUser ?? this.isFollowingUser,
         isShowRouteDrawing: isShowRouteDrawing ?? this.isShowRouteDrawing,
+        selectedCircleId: selectedCircleId ?? this.selectedCircleId,
         polylines: polylines ?? this.polylines,
         markers: markers ?? this.markers,
         circles: circles ?? this.circles,
@@ -48,6 +52,7 @@ class MapState extends Equatable {
         isMapInitialized,
         isFollowingUser,
         isShowRouteDrawing,
+        selectedCircleId,
         polylines,
         markers,
         circles,

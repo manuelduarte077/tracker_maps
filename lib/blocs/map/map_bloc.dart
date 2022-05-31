@@ -93,8 +93,9 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   Future drawRoutePoliyline(RouteDestination destination) async {
     final myRoute = Polyline(
       polylineId: const PolylineId('route'),
+      patterns: [PatternItem.dash(10)],
       color: Colors.indigoAccent,
-      width: 10,
+      width: 5,
       startCap: Cap.roundCap,
       endCap: Cap.roundCap,
       points: destination.points,
@@ -104,20 +105,16 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     kms = (kms * 100).floorToDouble();
     kms /= 100;
 
-    // Tiempo de duración de la ruta en horas y minutos
-
-    // final tripDuration = Duration(
-    //   hours: destination.duration ~/ 3600,
-    //   minutes: (destination.duration % 3600) ~/ 60.floorToDouble(),
-    // );
-
     int tripDuration = (destination.duration / 60).floorToDouble().toInt();
-    // final durationText = '${tripDuration.inHours}h ${tripDuration.inMinutes}';
 
     final startMaker = await getStartCustomMarker(
-        tripDuration, destination.startPlaces.placeName);
-    final endMaker =
-        await getEndCustomMarker(kms.toInt(), destination.endPlaces.text);
+      tripDuration,
+      destination.startPlaces.placeName,
+    );
+    final endMaker = await getEndCustomMarker(
+      kms.toInt(),
+      destination.endPlaces.text,
+    );
 
     // Markers
     final startMarker = Marker(
@@ -132,22 +129,38 @@ class MapBloc extends Bloc<MapEvent, MapState> {
       position: destination.points.last,
       icon: endMaker,
       draggable: true,
+      consumeTapEvents: true,
       onTap: () {},
     );
     // End Markers
 
     // Circles
+
+    final VoidCallback? onTap = () {
+      InkWell(
+        onTap: () {
+          print('Tapped');
+        },
+        child: Container(
+          width: 100,
+          height: 100,
+          color: Colors.red,
+        ),
+      );
+    };
+
     final endCircle = Circle(
       circleId: const CircleId('end'),
       center: destination.points.last,
-      radius: 10,
+      radius: 50,
       fillColor: const Color.fromRGBO(171, 39, 133, 0.1),
       strokeColor: const Color.fromRGBO(171, 39, 133, 0.5),
-      onTap: () {},
+      consumeTapEvents: true,
+      onTap: () {
+        onTap!();
+      },
     );
     // End Circles
-
-    // End Polygons
 
     final currentCircles = Map<String, Circle>.from(state.circles);
     currentCircles['start'] = endCircle;
@@ -173,6 +186,17 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   void moveCamera(LatLng newLocation) {
     final cameraUpdate = CameraUpdate.newLatLng(newLocation);
     _mapController?.animateCamera(cameraUpdate);
+  }
+
+  void clickCircle(LatLng newLocation) {
+    final cameraUpdate = Circle(
+      circleId: const CircleId('end'),
+      center: newLocation,
+      radius: 50,
+      fillColor: Colors.red,
+      strokeColor: Colors.black,
+      consumeTapEvents: true,
+    );
   }
 
   @override

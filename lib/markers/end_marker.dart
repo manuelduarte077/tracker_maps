@@ -4,7 +4,10 @@ class EndMarkerPainter extends CustomPainter {
   final int kilometers;
   final String destination;
 
-  EndMarkerPainter({required this.kilometers, required this.destination});
+  EndMarkerPainter({
+    required this.kilometers,
+    required this.destination,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -72,9 +75,10 @@ class EndMarkerPainter extends CustomPainter {
     // Descripción
 
     final locationText = TextSpan(
-        style: const TextStyle(
-            color: Colors.black, fontSize: 20, fontWeight: FontWeight.w300),
-        text: destination);
+      style: const TextStyle(
+          color: Colors.black, fontSize: 20, fontWeight: FontWeight.w300),
+      text: destination,
+    );
 
     final locationPainter = TextPainter(
         maxLines: 2,
