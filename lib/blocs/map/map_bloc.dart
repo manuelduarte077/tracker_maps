@@ -2,16 +2,16 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
-import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 import 'package:maps/blocs/blocs.dart';
-import 'package:maps/themes/theme.dart';
-import 'package:maps/models/models.dart';
 import 'package:maps/helpers/widgets_to_marker.dart';
+import 'package:maps/models/models.dart';
+import 'package:maps/themes/theme.dart';
 
 part 'map_event.dart';
+
 part 'map_state.dart';
 
 class MapBloc extends Bloc<MapEvent, MapState> {
@@ -29,7 +29,8 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     on<OnStartMapFollowingUserEvent>(_onStartMapFollowingUser);
 
     on<OnStopMapFollowingUserEvent>(
-        ((event, emit) => emit(state.copyWith(isFollowingUser: false))));
+      ((event, emit) => emit(state.copyWith(isFollowingUser: false))),
+    );
 
     on<UpddateUSerPolylineEvent>(_onPolylineNewPoint);
     on<DisplayPolylinesEvent>(
@@ -135,20 +136,6 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     // End Markers
 
     // Circles
-
-    final VoidCallback? onTap = () {
-      InkWell(
-        onTap: () {
-          print('Tapped');
-        },
-        child: Container(
-          width: 100,
-          height: 100,
-          color: Colors.red,
-        ),
-      );
-    };
-
     final endCircle = Circle(
       circleId: const CircleId('end'),
       center: destination.points.last,
@@ -156,9 +143,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
       fillColor: const Color.fromRGBO(171, 39, 133, 0.1),
       strokeColor: const Color.fromRGBO(171, 39, 133, 0.5),
       consumeTapEvents: true,
-      onTap: () {
-        onTap!();
-      },
+      onTap: () {},
     );
     // End Circles
 
