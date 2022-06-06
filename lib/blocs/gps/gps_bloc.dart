@@ -82,7 +82,6 @@ class GpsBloc extends Bloc<GpsEvent, GpsState> {
 
   @override
   Future<void> close() {
-    // TODO: Limpiar ServiceStatus stream
     gpsServiceSubscription?.cancel();
     return super.close();
   }

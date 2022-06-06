@@ -26,8 +26,10 @@ Future<BitmapDescriptor> getEndCustomMarker(
   final canvas = ui.Canvas(recoder);
   const size = ui.Size(350, 150);
 
-  final startMarker =
-      EndMarkerPainter(kilometers: kilometers, destination: destination);
+  final startMarker = EndMarkerPainter(
+    kilometers: kilometers,
+    destination: destination,
+  );
   startMarker.paint(canvas, size);
 
   final picture = recoder.endRecording();
