@@ -17,6 +17,13 @@ class OnStopMapFollowingUserEvent extends MapEvent {}
 
 class OnStartMapFollowingUserEvent extends MapEvent {}
 
+// Para hacer algo despues de tocar el circulo
+class OnCircleTappedEvent extends MapEvent {
+  final Circle circleId;
+
+  const OnCircleTappedEvent(this.circleId);
+}
+
 class UpddateUSerPolylineEvent extends MapEvent {
   final List<LatLng> userLocations;
 

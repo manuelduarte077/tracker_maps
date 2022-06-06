@@ -2,16 +2,16 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
-import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 import 'package:maps/blocs/blocs.dart';
-import 'package:maps/themes/theme.dart';
-import 'package:maps/models/models.dart';
 import 'package:maps/helpers/widgets_to_marker.dart';
+import 'package:maps/models/models.dart';
+import 'package:maps/themes/theme.dart';
 
 part 'map_event.dart';
+
 part 'map_state.dart';
 
 class MapBloc extends Bloc<MapEvent, MapState> {
@@ -29,7 +29,8 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     on<OnStartMapFollowingUserEvent>(_onStartMapFollowingUser);
 
     on<OnStopMapFollowingUserEvent>(
-        ((event, emit) => emit(state.copyWith(isFollowingUser: false))));
+      ((event, emit) => emit(state.copyWith(isFollowingUser: false))),
+    );
 
     on<UpddateUSerPolylineEvent>(_onPolylineNewPoint);
     on<DisplayPolylinesEvent>(
@@ -93,8 +94,9 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   Future drawRoutePoliyline(RouteDestination destination) async {
     final myRoute = Polyline(
       polylineId: const PolylineId('route'),
+      patterns: [PatternItem.dash(10)],
       color: Colors.indigoAccent,
-      width: 10,
+      width: 5,
       startCap: Cap.roundCap,
       endCap: Cap.roundCap,
       points: destination.points,
@@ -104,20 +106,16 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     kms = (kms * 100).floorToDouble();
     kms /= 100;
 
-    // Tiempo de duración de la ruta en horas y minutos
-
-    // final tripDuration = Duration(
-    //   hours: destination.duration ~/ 3600,
-    //   minutes: (destination.duration % 3600) ~/ 60.floorToDouble(),
-    // );
-
     int tripDuration = (destination.duration / 60).floorToDouble().toInt();
-    // final durationText = '${tripDuration.inHours}h ${tripDuration.inMinutes}';
 
     final startMaker = await getStartCustomMarker(
-        tripDuration, destination.startPlaces.placeName);
-    final endMaker =
-        await getEndCustomMarker(kms.toInt(), destination.endPlaces.text);
+      tripDuration,
+      destination.startPlaces.placeName,
+    );
+    final endMaker = await getEndCustomMarker(
+      kms.toInt(),
+      destination.endPlaces.text,
+    );
 
     // Markers
     final startMarker = Marker(
@@ -132,6 +130,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
       position: destination.points.last,
       icon: endMaker,
       draggable: true,
+      consumeTapEvents: true,
       onTap: () {},
     );
     // End Markers
@@ -140,14 +139,13 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     final endCircle = Circle(
       circleId: const CircleId('end'),
       center: destination.points.last,
-      radius: 10,
+      radius: 50,
       fillColor: const Color.fromRGBO(171, 39, 133, 0.1),
       strokeColor: const Color.fromRGBO(171, 39, 133, 0.5),
+      consumeTapEvents: true,
       onTap: () {},
     );
     // End Circles
-
-    // End Polygons
 
     final currentCircles = Map<String, Circle>.from(state.circles);
     currentCircles['start'] = endCircle;
@@ -173,6 +171,17 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   void moveCamera(LatLng newLocation) {
     final cameraUpdate = CameraUpdate.newLatLng(newLocation);
     _mapController?.animateCamera(cameraUpdate);
+  }
+
+  void clickCircle(LatLng newLocation) {
+    final cameraUpdate = Circle(
+      circleId: const CircleId('end'),
+      center: newLocation,
+      radius: 50,
+      fillColor: Colors.red,
+      strokeColor: Colors.black,
+      consumeTapEvents: true,
+    );
   }
 
   @override

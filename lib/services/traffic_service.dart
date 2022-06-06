@@ -58,10 +58,24 @@ class TrafficService {
     return placesResponse.features.first;
   }
 
-  // Traer el datale de los marcadores
+  // Traer el dataLle de los marcadores
   Future<Feature> getInfoMarker(LatLng coors) async {
     final url =
         '$_baseTrafficUrlPlaces/${coors.longitude}, ${coors.latitude}.json';
+
+    final resp = await _dioPlaces.get(url, queryParameters: {
+      'limit': '1',
+    });
+
+    final placesResponse = PlacesResponse.fromJson(resp.data);
+
+    return placesResponse.features.first;
+  }
+
+  // Traer la informacion de los places
+  Future<Feature> getInfoPlacesByName(LatLng name) async {
+    final url =
+        '$_baseTrafficUrlPlaces/${name.longitude}, ${name.latitude}.json';
 
     final resp = await _dioPlaces.get(url, queryParameters: {
       'limit': '1',
