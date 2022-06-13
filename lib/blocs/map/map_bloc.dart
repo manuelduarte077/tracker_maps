@@ -91,11 +91,11 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     emit(state.copyWith(polylines: currentPolylines));
   }
 
-  Future drawRoutePoliyline(RouteDestination destination) async {
+  Future drawRoutePolyline(RouteDestination destination) async {
     final myRoute = Polyline(
       polylineId: const PolylineId('route'),
       patterns: [PatternItem.dash(10)],
-      color: Colors.indigoAccent,
+      color: Colors.black,
       width: 5,
       startCap: Cap.roundCap,
       endCap: Cap.roundCap,
@@ -117,7 +117,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
       destination.endPlaces.text,
     );
 
-    // Markers
+    /// Markers
     final startMarker = Marker(
       anchor: const Offset(0.1, 1),
       markerId: const MarkerId('start'),
@@ -135,7 +135,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     );
     // End Markers
 
-    // Circles
+    /// Circles
     final endCircle = Circle(
       circleId: const CircleId('end'),
       center: destination.points.last,
@@ -171,17 +171,6 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   void moveCamera(LatLng newLocation) {
     final cameraUpdate = CameraUpdate.newLatLng(newLocation);
     _mapController?.animateCamera(cameraUpdate);
-  }
-
-  void clickCircle(LatLng newLocation) {
-    final cameraUpdate = Circle(
-      circleId: const CircleId('end'),
-      center: newLocation,
-      radius: 50,
-      fillColor: Colors.red,
-      strokeColor: Colors.black,
-      consumeTapEvents: true,
-    );
   }
 
   @override

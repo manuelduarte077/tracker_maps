@@ -46,7 +46,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     final distance = trafficResponse.routes[0].distance;
     final geometry = trafficResponse.routes[0].geometry;
 
-    // Decodificar
+    // Descodificar
     final points = decodePolyline(geometry, accuracyExponent: 6);
 
     final latLngList = points

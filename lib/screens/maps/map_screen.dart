@@ -57,16 +57,16 @@ class _MapScreenState extends State<MapScreen> {
           }
           return BlocBuilder<MapBloc, MapState>(
             builder: (context, mapState) {
-              Map<String, Polyline> polylines = Map.from(mapState.polylines);
+              Map<String, Polyline> polyline = Map.from(mapState.polylines);
               if (!mapState.isShowRouteDrawing) {
-                polylines.removeWhere((key, value) => key == 'myRoute');
+                polyline.removeWhere((key, value) => key == 'myRoute');
               }
               return SingleChildScrollView(
                 child: Stack(
                   children: [
                     MapView(
                       initialLocation: locationState.lastKnownLocation!,
-                      polylines: polylines.values.toSet(),
+                      polylines: polyline.values.toSet(),
                       markers: mapState.markers.values.toSet(),
                       circles: mapState.circles.values.toSet(),
                     ),

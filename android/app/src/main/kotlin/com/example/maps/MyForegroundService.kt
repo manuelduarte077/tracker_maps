@@ -36,7 +36,6 @@ class MyForegroundService :  Service() {
             notificationManager.createNotificationChannel(mChannel)
 
             builder.setChannelId(MainActivity.CHANNEL_NAME)
-
         }
         val notification: Notification = builder.setContentTitle("getnerdify.app")
             .setContentText("Tracking location")

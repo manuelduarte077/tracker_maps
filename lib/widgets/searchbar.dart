@@ -40,7 +40,7 @@ class _SearchBar extends StatelessWidget {
     if (result.position != null) {
       final destination = await searchBloc.getCoorsStartToEnd(
           locationBloc.state.lastKnownLocation!, result.position!);
-      await mapBloc.drawRoutePoliyline(destination);
+      await mapBloc.drawRoutePolyline(destination);
     }
   }
 
