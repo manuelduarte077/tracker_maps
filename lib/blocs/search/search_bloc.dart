@@ -33,7 +33,6 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     final trafficResponse = await trafficService.getCoorsStartToEnd(start, end);
 
     // informacion de la ruta inicial
-
     final endPlaces = await trafficService.getInfoPlaces(end);
 
     // informacion de la ruta final
