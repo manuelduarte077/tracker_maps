@@ -66,13 +66,6 @@ class _ManualMarker extends StatelessWidget {
               duration: const Duration(milliseconds: 300),
               child: MaterialButton(
                 minWidth: size.width - 120,
-                child: const Text(
-                  'Confirm',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
                 color: Colors.black,
                 elevation: 0,
                 height: 50,
@@ -99,6 +92,13 @@ class _ManualMarker extends StatelessWidget {
 
                   Navigator.pop(context);
                 },
+                child: const Text(
+                  'Confirm',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ),
           ),

@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:maps/repositories/brackground_location_repository_impl.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 part 'gps_event.dart';
@@ -11,7 +10,6 @@ part 'gps_state.dart';
 
 class GpsBloc extends Bloc<GpsEvent, GpsState> {
   StreamSubscription? gpsServiceSubscription;
-  BackgroundLocationRepositoryImpl? _backgroundLocationRepository;
 
   GpsBloc()
       : super(const GpsState(
@@ -85,16 +83,8 @@ class GpsBloc extends Bloc<GpsEvent, GpsState> {
 
   // Revisar si el usuario acepto el gps
   Future<bool> _permissionGranted() async {
-    final _isGranted = await Permission.location.isGranted;
-    return _isGranted;
-  }
-
-  // Show notification if gps is enabled
-  Future<void> _showGpsEnabledNotification() async {
-    final isGpsEnabled =
-        await _backgroundLocationRepository?.startForegroundService();
-
-    return isGpsEnabled;
+    final isGranted = await Permission.location.isGranted;
+    return isGranted;
   }
 
   @override

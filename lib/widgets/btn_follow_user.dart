@@ -13,6 +13,15 @@ class BtnFollowUser extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
       child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          animationDuration: const Duration(milliseconds: 500),
+        ),
+        onPressed: () {
+          mapBloc.add(OnStartMapFollowingUserEvent());
+        },
         child: BlocBuilder<MapBloc, MapState>(
           builder: (context, state) {
             return Icon(
@@ -23,15 +32,6 @@ class BtnFollowUser extends StatelessWidget {
             );
           },
         ),
-        style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          animationDuration: const Duration(milliseconds: 500),
-        ),
-        onPressed: () {
-          mapBloc.add(OnStartMapFollowingUserEvent());
-        },
       ),
     );
   }

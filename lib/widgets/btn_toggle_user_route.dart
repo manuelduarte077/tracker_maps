@@ -13,10 +13,6 @@ class BtnToggleUserRoute extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
       child: ElevatedButton(
-        child: const Icon(
-          Icons.more_horiz_rounded,
-          color: Colors.black,
-        ),
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
@@ -26,6 +22,10 @@ class BtnToggleUserRoute extends StatelessWidget {
         onPressed: () {
           mapBloc.add(OnToggleUserRouteDrawingEvent());
         },
+        child: const Icon(
+          Icons.more_horiz_rounded,
+          color: Colors.black,
+        ),
       ),
     );
   }

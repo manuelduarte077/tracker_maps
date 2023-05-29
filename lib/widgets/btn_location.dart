@@ -15,10 +15,6 @@ class BtnCurrentLocation extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
       child: ElevatedButton(
-        child: const Icon(
-          Icons.my_location_rounded,
-          color: Colors.black,
-        ),
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
@@ -36,6 +32,10 @@ class BtnCurrentLocation extends StatelessWidget {
           }
           mapBloc.moveCamera(userLocation);
         },
+        child: const Icon(
+          Icons.my_location_rounded,
+          color: Colors.black,
+        ),
       ),
     );
   }
