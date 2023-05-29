@@ -70,7 +70,7 @@ class _MapScreenState extends State<MapScreen> {
                       markers: mapState.markers.values.toSet(),
                       circles: mapState.circles.values.toSet(),
                     ),
-                    const SearchBar(),
+                    const SearchBarWidget(),
                     const ManualMarker(),
                   ],
                 ),
@@ -80,9 +80,9 @@ class _MapScreenState extends State<MapScreen> {
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: Column(
+      floatingActionButton: const Column(
         mainAxisAlignment: MainAxisAlignment.end,
-        children: const [
+        children: [
           BtnToggleUserRoute(),
           BtnFollowUser(),
           BtnCurrentLocation(),
